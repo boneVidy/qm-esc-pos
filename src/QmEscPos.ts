@@ -109,7 +109,8 @@ export class QmEscPos {
 
   public  printColumnsText = async (texts: Array<string>, weights: Array<number>, aligns: Array<AlginType>, zoom = true) => {
    const text = columnsText(texts, weights, aligns, PAGE_ROW_SIZE, zoom).reduce((prev, next) => {
-          return prev + next + '\n' ;
+          // return prev + next + '\n' ;
+          return prev + next;
       }, '');
    return this.printText(text);
   };

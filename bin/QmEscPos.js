@@ -100,7 +100,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
             };
             this.printColumnsText = async (texts, weights, aligns, zoom = true) => {
                 const text = core_1.columnsText(texts, weights, aligns, core_1.PAGE_ROW_SIZE, zoom).reduce((prev, next) => {
-                    return prev + next + '\n';
+                    // return prev + next + '\n' ;
+                    return prev + next;
                 }, '');
                 return this.printText(text);
             };

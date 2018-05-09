@@ -1,14 +1,14 @@
 {
   "name": "qm-esc-pos",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "escpos 打印模块",
+  "main": "./bin/index.js",
   "dependencies": {
     "escpos": "^2.4.5"
   },
   "devDependencies": {},
   "scripts": {
-    "build": "rm -rf ./bin && tsc --sourceMap",
+    "build": "rm -rf ./bin && tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "rebuildEsc": "npm rebuild usb"
   },

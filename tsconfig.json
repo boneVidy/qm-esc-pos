@@ -56,7 +56,6 @@
     
   },
   "exclude": [
-    "./print_common.ts",
-    "print_usb_58.ts"
+
   ]
 }

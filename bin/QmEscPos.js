@@ -189,4 +189,3 @@ var __importStar = (this && this.__importStar) || function (mod) {
     QmEscPos.defaultOpts = { encoding: "GBK" /* default */ };
     exports.QmEscPos = QmEscPos;
 });
-//# sourceMappingURL=QmEscPos.js.map

@@ -1,0 +1,17 @@
+{
+  "name": "qm-esc-pos",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "escpos": "^2.4.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "build": "rm -rf ./bin && tsc --sourceMap",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "rebuildEsc": "npm rebuild usb"
+  },
+  "author": "",
+  "license": "ISC"
+}

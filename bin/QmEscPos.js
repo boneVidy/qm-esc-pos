@@ -34,12 +34,15 @@ var __importStar = (this && this.__importStar) || function (mod) {
             case 'center':
                 return 'CT';
         }
-        return 'CT';
+        return 'LT';
     };
+    const noop = (device) => { };
     class QmEscPos {
         constructor() {
             this.isOpen = false;
             this.PAGE_ROW_SIZE = 28;
+            this.detachHandler = noop;
+            this.connectedHandler = noop;
             this.open = () => {
                 if (this.isOpen) {
                     return Promise.resolve();
@@ -84,7 +87,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
                             break;
                     }
                 }
-                printer.style('b').text(opts.content);
+                printer.style('NORMAL').text(opts.content);
             };
             this.printText = async (text, fontSize = 'small', align = 0) => {
                 fontSize = typeof fontSize === 'number' ? fontSize : core_1.fontSize(fontSize);
@@ -146,7 +149,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
             this.getPrinter = () => {
                 return this.printer;
             };
-            this.align = (alignType) => {
+            this.align = (alignType = 0) => {
                 const { printer } = this;
                 try {
                     printer.align(getAlignType(alignType));
@@ -171,9 +174,57 @@ var __importStar = (this && this.__importStar) || function (mod) {
                     throw e;
                 }
             };
+            this.setDetachListener = (handler) => {
+                this.detachHandler = handler;
+            };
+            this.setConnectedListener = (handler) => {
+                this.connectedHandler = handler;
+            };
+            this.getDeviceInfo = () => {
+                // {
+                //     "bLength": 18,
+                //     "bDescriptorType": 1,
+                //     "bcdUSB": 512,
+                //     "bDeviceClass": 0,
+                //     "bDeviceSubClass": 0,
+                //     "bDeviceProtocol": 0,
+                //     "bMaxPacketSize0": 64,
+                //     "idVendor": 1155,
+                //     "idProduct": 22304,
+                //     "bcdDevice": 512,
+                //     "iManufacturer": 1,
+                //     "iProduct": 2,
+                //     "iSerialNumber": 3,
+                //     "bNumConfigurations": 1
+                // }
+                // console.log(this.device.device.deviceDescriptor);
+                const { idVendor, idProduct, iManufacturer } = this.device.device.deviceDescriptor;
+                return { idVendor, idProduct, iManufacturer };
+            };
             const { defaultOpts } = QmEscPos;
             this.device = new escpos.USB();
+            this.device.on('detach', (device) => {
+                console.warn(`-`.repeat(50) + 'device detach' + `-`.repeat(50));
+                console.log(device);
+                console.warn(`-`.repeat(50) + 'device detach' + `-`.repeat(50));
+                if (this.detachHandler) {
+                    this.detachHandler(device);
+                }
+            });
+            this.device.on('connect', (device) => {
+                console.log(`-`.repeat(50) + 'device connected' + `-`.repeat(50));
+                console.log(device);
+                console.log(`-`.repeat(50) + 'device connected' + `-`.repeat(50));
+                if (this.connectedHandler) {
+                    this.connectedHandler(device);
+                    // setImmediate(() => {
+                    //     this.connectedHandler(device);
+                    // });
+                }
+            });
             this.printer = new escpos.Printer(this.device, defaultOpts);
+            console.log(this.device);
+            console.log(this.printer);
         }
         static create() {
             if (!QmEscPos.instance) {
@@ -190,3 +241,4 @@ var __importStar = (this && this.__importStar) || function (mod) {
     QmEscPos.defaultOpts = { encoding: "GBK" /* default */ };
     exports.QmEscPos = QmEscPos;
 });
+//# sourceMappingURL=QmEscPos.js.map

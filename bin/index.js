@@ -12,3 +12,4 @@
     const QmEscPos_1 = require("./QmEscPos");
     exports.default = QmEscPos_1.QmEscPos;
 });
+//# sourceMappingURL=index.js.map

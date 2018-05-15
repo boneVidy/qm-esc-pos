@@ -5,12 +5,15 @@
   "main": "./bin/index.js",
   "types": "./type/index.d.ts",
   "dependencies": {
+    "@types/usb": "^1.1.5",
     "escpos": "^2.4.5"
   },
   "devDependencies": {},
   "scripts": {
     "build": "rm -rf ./bin && tsc --declaration",
+    "buildDev": "rm -rf ./bin && tsc --declaration --sourceMap",
     "test": "echo \"Error: no test specified\" && exit 1",
+
     "rebuildEsc": "npm rebuild usb"
   },
   "author": "",
